@@ -34,3 +34,9 @@
 # file types
 *.png
 *.root
+
+# Ignoring certain things in the "marley" directory
+marley/*.root
+marley/TimeOrderedPlots/*.png
+marley/SemiAnalytic-ROOTFiles/*.root
+marley/SemiAnalytic-Histos/*.root
