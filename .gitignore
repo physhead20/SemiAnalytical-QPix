@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# file types
+*.png
+*.root
