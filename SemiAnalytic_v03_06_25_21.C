@@ -498,7 +498,7 @@ void WriteFile(int eventNumber)
 // ======  Make histogram file for sample  ======= 
 
 // ### Construct this files name ###
-std::string Histo = "./Histos_Event";
+std::string Histo = "./SemiAnalytic-Histos/Histos_Event";
 std::string EVNum = to_string(eventNumber);
 std::string file  = ".root";
 std::string str;
@@ -583,7 +583,7 @@ XprimaryZPrimary->Reset("ICESM");
 // ### This function writes out ROOT file for a given event for the time sliced histos ###
 void WriteFileTimeSlices(int EvNum)
 {
-std::string Files = "./SemiAnalytic-KaonEvents_Event";
+std::string Files = "./SemiAnalytic-ROOTFiles/SemiAnalytic-KaonEvents_Event";
 std::string Enum = to_string(EvNum);
 std::string Ending = "_Rebin.root";
 

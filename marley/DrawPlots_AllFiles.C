@@ -6,7 +6,7 @@ gStyle->SetOptTitle(0);
 gROOT->SetBatch(kTRUE);
 
 // ### This should be the maximum number of events you will loop over ###
-int nMaxEvents = 2;
+int nMaxEvents = 1000;
 
 std::string FilePrefix = "./SemiAnalytic-ROOTFiles/SemiAnalytic-MarleyEvents_Event";
 std::string FileSuffix = "_Rebin.root";
