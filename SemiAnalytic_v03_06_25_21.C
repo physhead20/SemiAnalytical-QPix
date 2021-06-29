@@ -54,34 +54,34 @@ TH2D *hDis_v_kappa = new TH2D("hDis_v_kappa", "kappa vs Distance", 600, 0, 600, 
 // ###################################################################
 // ### Loading TGraph's from csv files for On-Axis parametrization ###
 // ###################################################################
-TGraph *grN1NGamma_OnAxis = new TGraph("DUNE_N1_over_NGamma_OnAxis.csv", "%lg %lg", ",");
-TGraph *grZeta_OnAxis = new TGraph("DUNE_Eta_OnAxis.csv", "%lg %lg", ",");
-TGraph *grMu_OnAxis = new TGraph("DUNE_mu_OnAxis.csv", "%lg %lg", ",");
-TGraph *grN2N1_OnAxis = new TGraph("DUNE_N2N1_OnAxis.csv", "%lg %lg", ",");
-TGraph *grKappa_OnAxis = new TGraph("DUNE_kappa_OnAxis_v2.csv", "%lg %lg", ",");
+TGraph *grN1NGamma_OnAxis = new TGraph("CSV_Files/DUNE_N1_over_NGamma_OnAxis.csv", "%lg %lg", ",");
+TGraph *grZeta_OnAxis = new TGraph("CSV_Files/DUNE_Eta_OnAxis.csv", "%lg %lg", ",");
+TGraph *grMu_OnAxis = new TGraph("CSV_Files/DUNE_mu_OnAxis.csv", "%lg %lg", ",");
+TGraph *grN2N1_OnAxis = new TGraph("CSV_Files/DUNE_N2N1_OnAxis.csv", "%lg %lg", ",");
+TGraph *grKappa_OnAxis = new TGraph("CSV_Files/DUNE_kappa_OnAxis_v2.csv", "%lg %lg", ",");
 
 // ####################################################################
 // ### Loading TGraph's from csv files for Off-Axis parametrization ###
 // ####################################################################
-TGraph *grN1NGamma_OffAxis = new TGraph("DUNE_N1_over_NGamma_OffAxis.csv", "%lg %lg", ",");
-TGraph *grZeta_OffAxis = new TGraph("DUNE_Eta_OffAxis.csv", "%lg %lg", ",");
-TGraph *grMu_OffAxis = new TGraph("DUNE_mu_OffAxis.csv", "%lg %lg", ",");
-TGraph *grN2N1_OffAxis = new TGraph("DUNE_N2N1_OffAxis.csv", "%lg %lg", ",");
-TGraph *grKappa_OffAxis = new TGraph("DUNE_kappa_OffAxis_v2.csv", "%lg %lg", ",");
+TGraph *grN1NGamma_OffAxis = new TGraph("CSV_Files/DUNE_N1_over_NGamma_OffAxis.csv", "%lg %lg", ",");
+TGraph *grZeta_OffAxis = new TGraph("CSV_Files/DUNE_Eta_OffAxis.csv", "%lg %lg", ",");
+TGraph *grMu_OffAxis = new TGraph("CSV_Files/DUNE_mu_OffAxis.csv", "%lg %lg", ",");
+TGraph *grN2N1_OffAxis = new TGraph("CSV_Files/DUNE_N2N1_OffAxis.csv", "%lg %lg", ",");
+TGraph *grKappa_OffAxis = new TGraph("CSV_Files/DUNE_kappa_OffAxis_v2.csv", "%lg %lg", ",");
 
 
 // ################################################################################################################
 // ### Loading Gaisser-Hillas Functions for the modification of G4 predicition to the pure geometric prediction ###
 // ################################################################################################################
-TGraph *grGaisser_Hillas_00_10 = new TGraph("DUNE_0_10degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_10_20 = new TGraph("DUNE_10_20degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_20_30 = new TGraph("DUNE_20_30degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_30_40 = new TGraph("DUNE_30_40degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_40_50 = new TGraph("DUNE_40_50degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_50_60 = new TGraph("DUNE_50_60degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_60_70 = new TGraph("DUNE_60_70degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_70_80 = new TGraph("DUNE_70_80degree.csv", "%lg %lg", ",");
-TGraph *grGaisser_Hillas_80_90 = new TGraph("DUNE_80_90degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_00_10 = new TGraph("CSV_Files/DUNE_0_10degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_10_20 = new TGraph("CSV_Files/DUNE_10_20degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_20_30 = new TGraph("CSV_Files/DUNE_20_30degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_30_40 = new TGraph("CSV_Files/DUNE_30_40degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_40_50 = new TGraph("CSV_Files/DUNE_40_50degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_50_60 = new TGraph("CSV_Files/DUNE_50_60degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_60_70 = new TGraph("CSV_Files/DUNE_60_70degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_70_80 = new TGraph("CSV_Files/DUNE_70_80degree.csv", "%lg %lg", ",");
+TGraph *grGaisser_Hillas_80_90 = new TGraph("CSV_Files/DUNE_80_90degree.csv", "%lg %lg", ",");
 
 // This function will take in the number of photons, distance to the pixel,  and the incident angle w.r.t to the pixel
 // and return the 5 parameters (N1, Zeta, mu, N2, and Kappa) needed to compute the transport time
