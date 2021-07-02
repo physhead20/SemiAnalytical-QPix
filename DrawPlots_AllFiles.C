@@ -6,9 +6,9 @@ gStyle->SetOptTitle(0);
 gROOT->SetBatch(kTRUE);
 
 // ### This should be the maximum number of events you will loop over ###
-int nMaxEvents = 5;
+int nMaxEvents = 3;
 
-std::string FilePrefix = "./SemiAnalytic-KaonEvents_Event";
+std::string FilePrefix = "./SemiAnalytic-ROOTFiles/SemiAnalytic-KaonEvents_Event";
 std::string FileSuffix = "_Rebin.root";
 
 std::string CanvasPrefix = "TimeOrderedPlots/Event";

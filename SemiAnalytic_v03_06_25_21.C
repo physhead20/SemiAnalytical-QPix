@@ -232,7 +232,7 @@ std::vector<double> TransportTimeParameters(double Distance, double Angle, int N
 TH2D *hEnergyDepositedVSPhotons = new TH2D("hEnergyDepositedVSPhotons", "Energy Deposited vs # of Photons", 40, 0, 6000, 40, 0, 2E8);
 TH1D *hEnergyDeposited = new TH1D("hEnergyDeposited", "Energy Deposited", 50, 0, 6000);
 TH1D *hNumOfPhotons = new TH1D("hNumOfPhotons", "Number of Photons", 50, 0, 2E8);
-TH1D *hTransportTime = new TH1D("hTransportTime", "Transport Time", 1000, -0.02, 0.02);
+TH1D *hTransportTime = new TH1D("hTransportTime", "Transport Time", 1000, -0.02, 400.);
 TH1D *hDepositionTime = new TH1D("hDepositionTime", "Transport Time", 1000, 0, 2000);
 TH1D *hTotalTime = new TH1D("hTotalTime", "Total Time", 1000, 0, 2000);
 
@@ -1086,8 +1086,8 @@ hScintTime->Scale(1/ hScintTime->Integral() );
 // ##############################
 // #### Loop over all events ####
 // ##############################
-for (Long64_t jentry=0; jentry<nentries;jentry++)
-//for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++) 
+//for (Long64_t jentry=0; jentry<nentries;jentry++)
+for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++) 
    {
    
    // ### Define a random x, y, z offset for the event ###
@@ -1266,8 +1266,12 @@ for (Long64_t jentry=0; jentry<nentries;jentry++)
 	      
 	      // ### This function returns the transport parameters (N1, Zeta, mu, N2, and Kappa)
 	      // ### in a vector in the order listed here
-	      std::vector<double> Params = TransportTimeParameters(dis, ang, PhotonCount);
+	      //std::vector<double> Params = TransportTimeParameters(dis, ang, PhotonCount);
+              std::vector<double> Params = TransportTimeParameters(dis, ang, n_photons_raw);
 	      
+	      //std::cout<<"N1: "<<Params[0]<<" Zeta: "<<Params[1]<<" mu: "<<Params[2]<<" N2: "<<Params[3]<<" Kappa: "<<Params[4]<<std::endl;
+              //std::cout<<"Distance: "<<dis<<" Angle: "<<ang<<" NPhotons: "<<PhotonCount<<std::endl;
+
 	      //=================================================================
 	      // ### The TMath::Landau function takes as it's arguments (Distance, mu, Zeta)
 	      // ### so that is TMath::Landau(dis, Params[2], Params[1]) and the last argument
