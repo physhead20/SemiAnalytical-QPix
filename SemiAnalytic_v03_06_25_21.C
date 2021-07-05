@@ -11,7 +11,7 @@
 
 // ### Define which event you are looking at ###
 int Event = 000;
-int Event_plus_one = Event+3;
+int Event_plus_one = Event+1;
 
 std::string EV = "001";
 
@@ -21,8 +21,12 @@ std::string EV = "001";
 //
 // These variables define properties of the detector I am simulating
 double xDimension = 350.; // (cm)
-double yDimension = 600.; // (cm)
-double zDimension = 600.; // (cm)
+double yDimension = 200.; // (cm)
+double zDimension = 200.; // (cm)
+
+int xBins = xDimension*2;
+int yBins = yDimension*2;
+int zBins = zDimension*2;
 
 // ### Define the size of pixels (in cm) ###
 double PixelPitch = 4.0; // (cm)
@@ -31,6 +35,8 @@ double PixelPitch = 4.0; // (cm)
 int nZPixels = zDimension/PixelPitch;
 int nYPixels = yDimension/PixelPitch;
 int nXPixels = xDimension/PixelPitch;
+
+int nPixel = nZPixels * nYPixels;
 
 
 
@@ -42,6 +48,41 @@ TVector3 planeNormalYZ(1, 0, 0);
 // ##################################
 
 
+// ================================================================================================
+// ============				Decalare Histograms Here 			===========
+// ================================================================================================
+TH2D *hEnergyDepositedVSPhotons = new TH2D("hEnergyDepositedVSPhotons", "Energy Deposited vs # of Photons", 40, 0, 6000, 40, 0, 2E8);
+TH1D *hEnergyDeposited = new TH1D("hEnergyDeposited", "Energy Deposited", 50, 0, 6000);
+TH1D *hNumOfPhotons = new TH1D("hNumOfPhotons", "Number of Photons", 50, 0, 2E8);
+TH1D *hTransportTime = new TH1D("hTransportTime", "Transport Time", 1000, -30, 2000.);
+TH1D *hScintTimePlot = new TH1D("hScintTimePlot", "Scintillation Time", 1000, -30, 2000.);
+TH1D *hDepositionTime = new TH1D("hDepositionTime", "Transport Time", 1000, 0, 2000);
+TH1D *hTotalTime = new TH1D("hTotalTime", "Total Time", 1000, -30, 2000);
+
+TH1D *hXPos = new TH1D("hXPos", "X Position", xBins, 0, xDimension);
+TH1D *hYPos = new TH1D("hYPos", "Y Position", yBins, 0, yDimension);
+TH1D *hZPos = new TH1D("hZPos", "Z Position", zBins, 0, zDimension);
+
+TH1D *hXPosRaw = new TH1D("hXPosRaw", "X Position", xBins, 0, xDimension);
+TH1D *hYPosRaw = new TH1D("hYPosRaw", "Y Position", yBins, 0, yDimension);
+TH1D *hZPosRaw = new TH1D("hZPosRaw", "Z Position", zBins, 0, zDimension);
+
+TH2D *hyz = new TH2D("hyz", "hyz", yBins, 0, yDimension, zBins, 0, zDimension);
+TH2D *hxy = new TH2D("hxy", "hxy", xBins, 0, xDimension, yBins, 0, yDimension);
+TH2D *hxz = new TH2D("hxz", "hxz", xBins, 0, xDimension, zBins, 0, zDimension);
+
+TH2D *hyizi = new TH2D("hyizi", "hyizi", yBins, 0, yDimension, zBins, 0, zDimension);
+TH2D *hxiyi = new TH2D("hxiyi", "hxiyi", xBins, 0, xDimension, yBins, 0, yDimension);
+TH2D *hxizi = new TH2D("hxizi", "hxizi", xBins, 0, xDimension, zBins, 0, zDimension);
+
+TH2D *YprimaryZPrimary = new TH2D("YprimaryZPrimary", "YprimaryZPrimary", yBins, 0, yDimension, zBins, 0, zDimension);
+TH2D *XprimaryYPrimary = new TH2D("XprimaryYPrimary", "XprimaryYPrimary", xBins, 0, xDimension, yBins, 0, yDimension);
+TH2D *XprimaryZPrimary = new TH2D("XprimaryZPrimary", "XprimaryZPrimary", xBins, 0, xDimension, zBins, 0, zDimension); 
+
+
+// ###############################################################
+// ### Histograms for the parameters of the transport function ###
+// ###############################################################
 TH2D *hDis_v_N1 = new TH2D("hDis_v_N1", "N1/NGamma vs Distance", 600, 0, 600, 100, 0, 10);
 TH2D *hDis_v_N1_onAxis = new TH2D("hDis_v_N1_onAxis", "N1/NGamma vs Distance", 600, 0, 600, 100, 0, 10);
 TH2D *hDis_v_N1_offAxis = new TH2D("hDis_v_N1_offAxis", "N1/NGamma vs Distance", 600, 0, 600, 100, 0, 10);
@@ -49,7 +90,8 @@ TH2D *hDis_v_zeta = new TH2D("hDis_v_zeta", "zeta vs Distance", 600, 0, 600, 200
 TH2D *hDis_v_mu = new TH2D("hDis_v_mu", "mu vs Distance", 600, 0, 600, 200, 0, 200);
 TH2D *hDis_v_N2 = new TH2D("hDis_v_N2", "N2/N1 vs Distance", 600, 0, 600, 100, 0, 10);
 TH2D *hDis_v_kappa = new TH2D("hDis_v_kappa", "kappa vs Distance", 600, 0, 600, 100, -1, 1);
-//TH2D *hxz = new TH2D("hxz", "hxz", 350, 0, 350, 800, 0, 800);
+// ================================================================================================  
+// ================================================================================================
 
 // ###################################################################
 // ### Loading TGraph's from csv files for On-Axis parametrization ###
@@ -226,37 +268,9 @@ std::vector<double> TransportTimeParameters(double Distance, double Angle, int N
    return Parameters;
    }//<---End Transport Time Parameters Function
 
-// ================================================================================================
-// ============				Decalare Histograms Here 			===========
-// ================================================================================================
-TH2D *hEnergyDepositedVSPhotons = new TH2D("hEnergyDepositedVSPhotons", "Energy Deposited vs # of Photons", 40, 0, 6000, 40, 0, 2E8);
-TH1D *hEnergyDeposited = new TH1D("hEnergyDeposited", "Energy Deposited", 50, 0, 6000);
-TH1D *hNumOfPhotons = new TH1D("hNumOfPhotons", "Number of Photons", 50, 0, 2E8);
-TH1D *hTransportTime = new TH1D("hTransportTime", "Transport Time", 1000, -0.02, 400.);
-TH1D *hDepositionTime = new TH1D("hDepositionTime", "Transport Time", 1000, 0, 2000);
-TH1D *hTotalTime = new TH1D("hTotalTime", "Total Time", 1000, 0, 2000);
 
-TH1D *hXPos = new TH1D("hXPos", "X Position", 350, 0, 350);
-TH1D *hYPos = new TH1D("hYPos", "Y Position", 600, 0, 600);
-TH1D *hZPos = new TH1D("hZPos", "Z Position", 600, 0, 600);
+TH2D * hPixelMap_AllTimes = new TH2D("hPixelMap_AllTimes", "Y-Z Pixel Map for all times", nYPixels, 0., nYPixels, nZPixels, 0., nZPixels);
 
-TH1D *hXPosRaw = new TH1D("hXPosRaw", "X Position", 350, 0, 350);
-TH1D *hYPosRaw = new TH1D("hYPosRaw", "Y Position", 600, 0, 600);
-TH1D *hZPosRaw = new TH1D("hZPosRaw", "Z Position", 600, 0, 600);
-
-TH2D *hyz = new TH2D("hyz", "hyz", 600, 0, 600, 600, 0, 600);
-TH2D *hxy = new TH2D("hxy", "hxy", 350, 0, 350, 600, 0, 600);
-TH2D *hxz = new TH2D("hxz", "hxz", 350, 0, 350, 600, 0, 600);
-
-TH2D *hyizi = new TH2D("hyizi", "hyizi", 200, 0, 200, 200, 0, 200);
-TH2D *hxiyi = new TH2D("hxiyi", "hxiyi", 350, 0, 350, 200, 0, 200);
-TH2D *hxizi = new TH2D("hxizi", "hxizi", 350, 0, 350, 200, 0, 200);
-
-TH2D *YprimaryZPrimary = new TH2D("YprimaryZPrimary", "YprimaryZPrimary", 200, 0, 200, 200, 0, 200);
-TH2D *XprimaryYPrimary = new TH2D("XprimaryYPrimary", "XprimaryYPrimary", 350, 0, 350, 200, 0, 200);
-TH2D *XprimaryZPrimary = new TH2D("XprimaryZPrimary", "XprimaryZPrimary", 350, 0, 350, 200, 0, 200); 
-// ================================================================================================  
-// ================================================================================================
 
 // ############ Time Sliced Histograms ######################
 TH2D *hPixelMap_000ns_010ns = new TH2D("hPixelMap_000ns_010ns", "Y-Z Pixel Map 0ns to 10ns", nYPixels, 0., nYPixels, nZPixels, 0., nZPixels);
@@ -512,6 +526,7 @@ hEnergyDepositedVSPhotons->Write();
 hEnergyDeposited->Write();
 hNumOfPhotons->Write();
 hTransportTime->Write();
+hScintTimePlot->Write();
 hDepositionTime->Write();
 hTotalTime->Write();
 hDis_v_N1->Write();
@@ -536,6 +551,7 @@ hxizi->Write();
 YprimaryZPrimary->Write();
 XprimaryYPrimary->Write();
 XprimaryZPrimary->Write();
+hPixelMap_AllTimes->Write();
 // ### Close the file ###
 myfile2.Close();
 
@@ -544,6 +560,7 @@ hEnergyDepositedVSPhotons->Reset("ICESM");
 hEnergyDeposited->Reset("ICESM");
 hNumOfPhotons->Reset("ICESM");
 hTransportTime->Reset("ICESM");
+hScintTimePlot->Reset("ICESM");
 hDepositionTime->Reset("ICESM");
 hTotalTime->Reset("ICESM");
 hDis_v_N1->Reset("ICESM");
@@ -568,6 +585,7 @@ hxizi->Reset("ICESM");
 YprimaryZPrimary->Reset("ICESM");
 XprimaryYPrimary->Reset("ICESM");
 XprimaryZPrimary->Reset("ICESM");
+hPixelMap_AllTimes->Reset("ICESM");
 
 
 }
@@ -1081,6 +1099,11 @@ for(double t = 0; t<2000; t+=0.1)
 // ### Normalize the histogram ###   
 hScintTime->Scale(1/ hScintTime->Integral() );
 //-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+
+
+// ### Make a TF1 Function from the Landau and the expotential to make a random draw from ###
+TF1 *LandPlusExp = new TF1("LandPlusExp", "TMath::Landau(x, [0], [1], true)+ ( [2]*exp([3]*x) )", 0, 100);
 
 
 // ##############################
@@ -1092,9 +1115,9 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
    
    // ### Define a random x, y, z offset for the event ###
    gRandom->SetSeed(jentry);
-   double xoffset = gRandom->Uniform(-10,150);
-   double yoffset = gRandom->Uniform(-20,300);
-   double zoffset = gRandom->Uniform(-20,300);
+   double xoffset = gRandom->Uniform(-10,int(xDimension/2));
+   double yoffset = gRandom->Uniform(-20,int(yDimension/2));
+   double zoffset = gRandom->Uniform(-20,int(zDimension/2));
    
    if(jentry%1 == 0){std::cout<<"Event: "<<jentry<<std::endl;}
    
@@ -1116,8 +1139,9 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
    std::cout<<"Number of Particles: "<<number_particles<<std::endl;
    double MuonTrackID = 0;
    // ### List out all the particles in the event ###
-   for (int aa = 0; aa < number_particles; aa++)
+   /*for (int aa = 0; aa < number_particles; aa++)
       {
+      
       
       // ### Skipping ionization electrons ###
       if(particle_process_key->at(aa) == 1){continue;}
@@ -1136,7 +1160,7 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
          }
       
       
-      }//<---End aa loop
+      }//<---End aa loop*/
    
    
    double generator_xi = generator_initial_particle_x->at(0) + xoffset;
@@ -1146,13 +1170,15 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
    hyizi->Fill(generator_yi,generator_zi);
    hxiyi->Fill(generator_xi,generator_yi);
    hxizi->Fill(generator_xi,generator_zi);
-
+   
    // ##################################################
    // #### Loop over all the deposited energy points ###
    // ##################################################
    for (int Edep = 0; Edep < number_hits; Edep ++)
    	{
-	if(Edep % 100 == 0){std::cout<<"Edep = "<<Edep<<" out of "<<number_hits<<std::endl;}
+   	int nPix = 0;
+	if(Edep % 10 == 0){std::cout<<"Edep = "<<Edep<<" out of "<<number_hits<<std::endl;}
+        std::cout<<"Edep = "<<Edep<<" out of "<<number_hits<<std::endl;
         double x_value = hit_start_x->at(Edep);
 	double y_value = hit_start_y->at(Edep);
 	double z_value = hit_start_z->at(Edep);
@@ -1208,7 +1234,7 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
 	   // ### For a given z-position, loop over all the pixels in the y-direction ###
 	   for(int yloc = 0; yloc< yDimension; yloc+= PixelPitch)
 	      {
-	      
+	      //std::cout<<"On Pixel: "<<nPix<<" of "<<nPixel<<std::endl;
 	      // ### Define the distance connecting the two points ###
     	      double distanceX = 0 - xpos;
 	      double distanceY = yloc - ypos; 
@@ -1271,20 +1297,15 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
 	      
 	      //std::cout<<"N1: "<<Params[0]<<" Zeta: "<<Params[1]<<" mu: "<<Params[2]<<" N2: "<<Params[3]<<" Kappa: "<<Params[4]<<std::endl;
               //std::cout<<"Distance: "<<dis<<" Angle: "<<ang<<" NPhotons: "<<PhotonCount<<std::endl;
-
-	      //=================================================================
-	      // ### The TMath::Landau function takes as it's arguments (Distance, mu, Zeta)
-	      // ### so that is TMath::Landau(dis, Params[2], Params[1]) and the last argument
-	      // ### set to true should have it return the value divided by zeta
-              double Landau = Params[0]*TMath::Landau(dis, Params[2], Params[1],  true); 
-              double Expo = Params[3]*exp(Params[4]*dis);
 	      
+
+              
+              //double Landau = Params[0]*TMath::Landau(dis, Params[2], Params[1],  true); 
+              //double Expo = Params[3]*exp(Params[4]*dis);
               //std::cout<<"Landau: "<<Landau<<std::endl;
               //std::cout<<"Expo: "<<Expo<<std::endl;
 
-	      double TransportTime = Landau+Expo;
 	      
-	      hTransportTime->Fill(TransportTime);
 	      
 	      // ### Calculate the initial time from the distance and the speed of 
 	      // ### light in LAr (11.23 cm/ns)
@@ -1296,8 +1317,26 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
 		 // ### Grab a random Scintillation time from the histogram ###
 		 double ScintTime = hScintTime->GetRandom();
 		 
+		 //=================================================================
+	         // ### The TMath::Landau function takes as it's arguments (Distance, mu, Zeta)
+	         // ### so that is TMath::Landau(dis, Params[2], Params[1]) and the last argument
+	         // ### set to true should have it return the value divided by zeta
+ 
+                 LandPlusExp->SetParameter(0,Params[2]);
+                 LandPlusExp->SetParameter(1,Params[1]);
+                 LandPlusExp->SetParameter(2,Params[3]);
+                 LandPlusExp->SetParameter(3,Params[4]);
+		 //double TransportTime = 0;
+		 double TransportTime = LandPlusExp->GetRandom();
+		 //std::cout<<"Transport Time = "<<TransportTime<<std::endl;
+		 //double TransportTime = 0;
+	      
+	         hTransportTime->Fill(TransportTime);
+	         hScintTimePlot->Fill(ScintTime);
+		 
 		 // ### Total Time is t0 + Scintillation Time + Deposition Time + Transport Time ###
 		 double total_time = t0 + ScintTime + DepositionTime + TransportTime;
+		 //std::cout<<"Total Time: "<<total_time<<std::endl;
 		 
 		 // ### Store the Y, Z, and time for each photon in a vector ###
 		 YPosition.push_back(nYPix);
@@ -1318,12 +1357,14 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
 	      
 	      // Bump the YPixel Counter
 	      nYPix++;
+	      nPix++;
 	      }//<--End yloc loop
 	   
 	   
 	   
 	   // Bump the Z Pixel Counter
 	   nZPix++;
+	   nPix++;
 	   // Zero the Y Pixel Counter
 	   nYPix = 0;
 	   }//<---end zloc loop
@@ -1335,6 +1376,8 @@ for (Long64_t jentry=Event; jentry<Event_plus_one;jentry++)
    // ### Looping over all the photons for this event ###
    for(int aa= 0; aa < ZPosition.size(); aa++)
       {
+      hPixelMap_AllTimes->Fill(YPosition[aa], ZPosition[aa]);
+      
       if(Time[aa] > 0 && Time[aa] < 10){hPixelMap_000ns_010ns->Fill(YPosition[aa], ZPosition[aa]);}
       if(Time[aa] > 10 && Time[aa] < 20){hPixelMap_010ns_020ns->Fill(YPosition[aa], ZPosition[aa]);}
       if(Time[aa] > 20 && Time[aa] < 30){hPixelMap_020ns_030ns->Fill(YPosition[aa], ZPosition[aa]);}
